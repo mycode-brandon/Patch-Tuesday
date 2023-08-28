@@ -6,7 +6,24 @@ Contains:
 - Method of creating a .xlsx file directly on the computer
 - Scripts that can be imported into PowerBI to run the same report, alongside mcode files for the data sources.
 
-# APP: async-mm-v2
+## Method:
+
+The way these scripts work is to pull data from the open API's Microsoft provides: 
+- https://api.msrc.microsoft.com/sug/v2.0/en-US/deployment
+- https://api.msrc.microsoft.com/sug/v2.0/en-US/vulnerability
+- https://api.msrc.microsoft.com/sug/v2.0/en-US/affectedProduct
+
+In addition, web scraping is used to pull other updates not available via an API like the Office Updates. The module BeautifulSoup is used for parsing the HTML.
+
+Titles of each KB article are also pulled from each KB article, requiring many HTTP requests. Async support was added to aide in the speed of running this report, so all HTTP requests happen asynchronously. Previously, scraping data like the summary, description, known issues, etc, from each KB article was being gathered. However, once I got that working Microsoft completely changed their website template being used, making all the parsing useless. Instead of recreating, I decided to eliminate that portion and only pull the bare minumum information needed via scraping.
+
+The API app is organized using an OOP methodology, and a report object instance can be created and run using the self.run method. That's all that is needed to make the app run with your specified parameters. Modules that proved extremely helpful were pydantic in creating base models for my objects, which can easily and automatically unpack json into nested objects, as well as aiohttp for the async support, and FastAPI which is the base of the api portion of the app.
+
+The project uses type hints made available in recent releases of Python.
+
+Later on, I found that it was a bit easier to maintain using smaller scripts meant just for making async HTTP requests, putting the json data into dataframes, and then using PowerBI for the rest. I've included the mcode for PowerBI which is how I am now cleaning the data run in these reports. After cleaning and combining the data in PowerBI, I just copy the table into Excel and format as necessary. PowerBI doesn't have the in-built capabilties to easily make async http requests, so Python is still a critical part of the process.
+
+# APP: async-mm-v2 Guide:
 
 ## Microsoft Monthly Patch Updates Report Creation
 This package creates a spreadsheet, starting a report for the updates for a specified month with information from the Catalog, MSRC Security Center, WSUS Updates, and Office Updates.
