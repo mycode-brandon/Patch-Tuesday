@@ -1,4 +1,12 @@
-# async-mm-v2
+# Patch-Tuesday
+
+This repository is a collection of methods to obtain and analyze the monthly patches that Microsoft releases every patch tuesday.
+Contains:
+- FastAPI app that can run in the browser and download an .xlsx file containing the report
+- Method of creating a .xlsx file directly on the computer
+- Scripts that can be imported into PowerBI to run the same report, alongside mcode files for the data sources.
+
+# APP: async-mm-v2
 
 ## Microsoft Monthly Patch Updates Report Creation
 This package creates a spreadsheet, starting a report for the updates for a specified month with information from the Catalog, MSRC Security Center, WSUS Updates, and Office Updates.
