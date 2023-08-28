@@ -5,6 +5,8 @@ This package creates a spreadsheet, starting a report for the updates for a spec
 
 Uses FastAPI and async/await in Python to create an API that will collect all the necessary information and compile it into a spreadsheet that will be downloaded from the browser. 
 
+NOTE: Currently only working for year 2023.
+
 Sources:
 
 MSRC: https://msrc.microsoft.com/update-guide/deployments
@@ -37,7 +39,7 @@ Head to http://localhost:80/report/{year}-{month}-{name}, replacing `{year}` wit
 Head to http://localhost:80/docs for the FastAPI auto documentation.
 
 
-### Run API:
+### Manual API Guide:
 
 Within terminal inside the `async-mm-v2` folder, run: `uvicorn src.main:app` or `uvicorn src.main:app --reload` for hot reload.
 
@@ -45,7 +47,7 @@ It should default to http://localhost:8000. Navigate there to check the json res
 
 Head to  http://localhost:8000/report/2023-1-reportname to  grab a  report in the form of a file download.
 
-### Guide:
+### Manual Guide:
 
 Create a `main.py` file.
 
