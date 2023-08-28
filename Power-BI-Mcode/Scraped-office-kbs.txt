@@ -1,0 +1,10 @@
+let
+    Source = Python.Execute("import pandas as pd#(lf)import requests#(lf)from bs4 import BeautifulSoup as bs#(lf)import re#(lf)#(lf)# change the variable below to &this_months_office_kb_number& in the PowerBI execute statement#(lf)new_kb = ""5002089""#(lf)url = f""https://support.microsoft.com/help/{new_kb}""#(lf)req = requests.get(url)#(lf)doc = bs(req.text, 'html.parser')#(lf)tr = doc.find_all('tr')#(lf)product_list = []#(lf)num_list = []#(lf)for r in tr:#(lf)    if r.find('td'):#(lf)        td = [x.get_text() for x in r.find_all('td')]#(lf)        product = td[0].strip()#(lf)        num = td[1].strip()#(lf)        num = re.search(r""\(KB(.*)\)"", num)#(lf)        if num:#(lf)            num = num.group(1)#(lf)        product_list.append(product)#(lf)        num_list.append(num)#(lf)#(lf)d = {'product': product_list, 'num': num_list}#(lf)scraped_office_kbs = pd.DataFrame(d)"),
+    scraped_office_kbs1 = Source{[Name="scraped_office_kbs"]}[Value],
+    #"Changed Type" = Table.TransformColumnTypes(scraped_office_kbs1,{{"product", type text}, {"num", Int64.Type}}),
+    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"num", "KB"}}),
+    #"Changed Type1" = Table.TransformColumnTypes(#"Renamed Columns",{{"KB", type text}}),
+    #"Renamed Columns1" = Table.RenameColumns(#"Changed Type1",{{"product", "Product"}}),
+    #"Added Custom1" = Table.AddColumn(#"Renamed Columns1", "Release Date", each #"Patch Tuesday Date")
+in
+    #"Added Custom1"
